@@ -4,16 +4,57 @@
       "description": "A utility to import documents from a database system using Solr",
       "versions": [
         {
+          "version": "9.2.1",
+          "date": "2023-04-20",
+          "artifacts": [
+            {
+              "url": "data-import-handler-9.2.1.jar",
+              "sig": "gYcNLEz/bMe0qM/gLSVhSrFSa7hwZI5i2rxnHrXSP3t8WkRhNH6s7xuNcHronmm7Ezlt9y0pJ4XS0t260/lqFw=="
+            },
+            {
+              "url": "mariadb-java-client-2.6.0.jar",
+              "sig": "af6J4KHKvhAe1yC4vuRBtrXBbNd+w1QFBiGZ9Rrk3KaQA6Opjwvcogn9voH9UftjGNl7WJsuRneHeaBE79+WDA=="
+            }
+          ],
+          "manifest": {
+              "version-constraint": "9.2.1",
+              "plugins": [
+                {
+                  "name": "request-handler",
+                  "setup-command": {
+                    "path": "/api/collections/${collection}/config",
+                    "payload": {"add-requesthandler": {"name": "${RH-HANDLER-PATH}", "class": "data-import-handler:org.apache.solr.handler.dataimport.DataImportHandler", "defaults": {"config": "data-config.xml"} } },
+                    "method": "POST"
+                  },
+                  "uninstall-command": {
+                    "path": "/api/collections/${collection}/config",
+                    "payload": {"delete-requesthandler": "${RH-HANDLER-PATH}"},
+                    "method": "POST"
+                  },
+                  "verify-command": {
+                    "path": "/api/collections/${collection}/config/requestHandler?componentName=${RH-HANDLER-PATH}&meta=true",
+                    "method": "GET",
+                    "condition": "$['config'].['requestHandler'].['${RH-HANDLER-PATH}'].['_packageinfo_'].['version']",
+                    "expected": "9.2.1"
+                  }
+                }
+              ],
+              "parameter-defaults": {
+                "RH-HANDLER-PATH": "/dataimport"
+              }
+          }        
+        },
+	{
           "version": "9.0.0",
           "date": "2023-04-20",
           "artifacts": [
             {
               "url": "data-import-handler-9.0.0.jar",
-              "sig": "S93ouzm7QcKL9OfrcoQLAy75VVVYJvFy1I9lzIRAOcpPX34n/Sn4Jx7xkNx6vLoBBNZpQXvn8SbWT0g2oVfUhA=="
+              "sig": "gYcNLEz/bMe0qM/gLSVhSrFSa7hwZI5i2rxnHrXSP3t8WkRhNH6s7xuNcHronmm7Ezlt9y0pJ4XS0t260/lqFw=="
             },
             {
               "url": "mariadb-java-client-2.6.0.jar",
-              "sig": "SfYkFEkpqNfytOeGYNTSB0VD1sNLvTFQR9oCRv+e2y6GzawaZHBGo+9nKrZJ/4MUDVxQLfOiyaEJyQOI8Y+L7A=="
+              "sig": "af6J4KHKvhAe1yC4vuRBtrXBbNd+w1QFBiGZ9Rrk3KaQA6Opjwvcogn9voH9UftjGNl7WJsuRneHeaBE79+WDA=="
             }
           ],
           "manifest": {
@@ -50,11 +91,11 @@
           "artifacts": [
             {
               "url": "data-import-handler-8.10.0.jar",
-              "sig": "ggich+cAREadydwCVHnf/HalMBVaYz9EIyqrBl1KUfcBQidsr5C9nbi0xVCH/foOTyPRzK66l7ImWQyayhz0NQ=="
+              "sig": "KRNyZqdItzuC0pC1kdm4JttxpfydyCG2L2h3XJknRzl6C8gtc944LicK9Q+EFBRA6JBpOmAUPiuFQJsHzOiF2g=="
             },
             {
               "url": "mariadb-java-client-2.6.0.jar",
-              "sig": "SfYkFEkpqNfytOeGYNTSB0VD1sNLvTFQR9oCRv+e2y6GzawaZHBGo+9nKrZJ/4MUDVxQLfOiyaEJyQOI8Y+L7A=="
+              "sig": "af6J4KHKvhAe1yC4vuRBtrXBbNd+w1QFBiGZ9Rrk3KaQA6Opjwvcogn9voH9UftjGNl7WJsuRneHeaBE79+WDA=="
             }
           ],
           "manifest": {
@@ -91,11 +132,11 @@
           "artifacts": [
             {
               "url": "data-import-handler-8.6.0.jar",
-              "sig": "mH6VVyBu0TQ3oIDH01FSVHzI0lAPI7+Eu4TtdFtV+JtYfC7LFKRs0nyiWE1Gs2U/L9dXm5/At08jkG0CgASN2A=="
+              "sig": "c2fR90QwF3VQGgOv7ymffIBg7z0/GSTBv+DXNM9NiQxMNawJ/QQm/Ed0JshHNuBlzF+cl4AI+BCQWm5FW2dzhA=="
             },
             {
               "url": "mariadb-java-client-2.6.0.jar",
-              "sig": "SfYkFEkpqNfytOeGYNTSB0VD1sNLvTFQR9oCRv+e2y6GzawaZHBGo+9nKrZJ/4MUDVxQLfOiyaEJyQOI8Y+L7A=="
+              "sig": "af6J4KHKvhAe1yC4vuRBtrXBbNd+w1QFBiGZ9Rrk3KaQA6Opjwvcogn9voH9UftjGNl7WJsuRneHeaBE79+WDA=="
             }
           ],
           "manifest": {
@@ -129,5 +170,3 @@
       ]
     }
   ]
-  
-  
